@@ -9,6 +9,7 @@
 .posts {
   li {
     list-style: none;
+    padding: 0 0.85rem;
 
     & + li {
       margin-top: 3rem;

@@ -1,2 +1,64 @@
-.container {
+.banner {
+  height: 25rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.post {
+  margin-top: 5rem;
+  padding-bottom: 5rem;
+
+  h1,
+  h2 {
+    font-weight: bold;
+    color: var(--gray-100);
+  }
+
+  header {
+    margin-bottom: 4rem;
+
+    h1 {
+      letter-spacing: -0.0325rem;
+      font-size: 3rem;
+
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      display: flex;
+
+      time,
+      span {
+        display: flex;
+        align-items: center;
+        font-size: 0.945rem;
+        color: var(--gray-300);
+
+        svg {
+          font-size: 1.35rem;
+          margin-right: 0.5rem;
+        }
+      }
+
+      span {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+
+  article {
+    margin-top: 2.5rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+
+    h2 {
+      font-size: 2.25rem;
+      margin-bottom: 2.25rem;
+    }
+
+    p,
+    li {
+      margin-top: 1.25rem;
+    }
+  }
 }
