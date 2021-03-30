@@ -1,6 +1,6 @@
 import Prismic from '@prismicio/client';
 import { GetStaticProps } from 'next';
-import { Head } from 'next/document';
+import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import { FiUser, FiCalendar } from 'react-icons/fi';
 
@@ -35,11 +35,57 @@ export default function Home(): JSX.Element {
         <title>Início | spacetraveling</title>
       </Head>
 
-      <main className={commonStyles.container}>
+      <main className={`${commonStyles.container} ${styles.container}`}>
         <div className={commonStyles.content}>
-          <img src="/images/logo.svg" alt="Space Traveling" />
+          <img
+            className={styles.logo}
+            src="/images/logo.svg"
+            alt="Space Traveling"
+          />
 
           <ul className={styles.posts}>
+            <li>
+              <h1>Como utilizar hooks</h1>
+              <sub>Pensando em sincronização em vez de ciclos de vida.</sub>
+              <footer>
+                <time>
+                  <FiCalendar />
+                  15 Mar 2021
+                </time>
+                <p>
+                  <FiUser />
+                  Joseph Oliveira
+                </p>
+              </footer>
+            </li>
+            <li>
+              <h1>Como utilizar hooks</h1>
+              <sub>Pensando em sincronização em vez de ciclos de vida.</sub>
+              <footer>
+                <time>
+                  <FiCalendar />
+                  15 Mar 2021
+                </time>
+                <p>
+                  <FiUser />
+                  Joseph Oliveira
+                </p>
+              </footer>
+            </li>
+            <li>
+              <h1>Como utilizar hooks</h1>
+              <sub>Pensando em sincronização em vez de ciclos de vida.</sub>
+              <footer>
+                <time>
+                  <FiCalendar />
+                  15 Mar 2021
+                </time>
+                <p>
+                  <FiUser />
+                  Joseph Oliveira
+                </p>
+              </footer>
+            </li>
             <li>
               <h1>Como utilizar hooks</h1>
               <sub>Pensando em sincronização em vez de ciclos de vida.</sub>

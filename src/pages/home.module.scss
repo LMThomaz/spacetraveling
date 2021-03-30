@@ -1,20 +1,67 @@
+.container {
+  padding: 5rem 0;
+}
+
+.logo {
+  padding-bottom: 4rem;
+}
+
 .posts {
   li {
+    list-style: none;
+
+    & + li {
+      margin-top: 3rem;
+    }
+
     h1 {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: var(--gray-100);
+
+      margin-bottom: 0.5rem;
     }
 
     sub {
+      display: block;
+      font-size: 1.125rem;
+
+      margin-bottom: 1.5rem;
     }
 
     footer {
-      time {
+      display: flex;
+      align-items: center;
+
+      svg {
+        font-size: 1.25rem;
+
+        margin-right: 0.5rem;
+      }
+
+      time,
+      p {
+        display: flex;
+        align-items: center;
+
+        font-size: 0.75rem;
+        color: var(--gray-300);
       }
 
       p {
+        margin-left: 1.5rem;
       }
     }
   }
 }
 
 .morePosts {
+  margin-top: 4rem;
+
+  font-weight: 600;
+  font-size: 1.125rem;
+
+  color: var(--pink-500);
+  background: none;
+  border: none;
 }
