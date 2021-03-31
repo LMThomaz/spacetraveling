@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { RichText } from 'prismic-dom';
 import { useState } from 'react';
 import { FiCalendar, FiUser } from 'react-icons/fi';
+import Comments from '../components/Comments';
 import { getPrismicClient } from '../services/prismic';
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
