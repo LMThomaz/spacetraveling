@@ -134,9 +134,9 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       uid: post.uid,
       data: {
-        author: RichText.asText(post.data.author),
-        subtitle: RichText.asText(post.data.subtitle),
-        title: RichText.asText(post.data.title),
+        author: post.data.author,
+        subtitle: post.data.subtitle,
+        title: post.data.title,
       },
       first_publication_date: dateFormatted,
     };
