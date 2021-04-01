@@ -1,17 +1,18 @@
+import Prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import PrismicDOM, { RichText } from 'prismic-dom';
-import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
-import Prismic from '@prismicio/client';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { RichText } from 'prismic-dom';
+import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
+import ButtonPreview from '../../components/ButtonPreview';
+import Comments from '../../components/Comments';
 import Header from '../../components/Header';
 import { getPrismicClient } from '../../services/prismic';
-
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
-import Comments from '../../components/Comments';
 
 interface Post {
   first_publication_date: string | null;
@@ -85,6 +86,7 @@ export default function Post({ post }: PostProps): JSX.Element {
                 {`${Math.ceil(timeForReading / 200)} min`}
               </span>
             </p>
+            <small>* editado em 19 mar 2021, às 15:49</small>
           </header>
           {post.data.content.map(content => (
             <article key={content.heading}>
@@ -98,7 +100,24 @@ export default function Post({ post }: PostProps): JSX.Element {
           ))}
         </section>
 
-        <Comments />
+        <footer className={styles.footer}>
+          <div className={styles.links}>
+            <Link href="/posts/slug-pagina">
+              <a>
+                <p>Como utilizar Hooks</p>
+                <span>Post anterior</span>
+              </a>
+            </Link>
+            <Link href="/posts/slug-pagina">
+              <a>
+                <p>Criando um app CRA do Zero</p>
+                <span>Próximo post</span>
+              </a>
+            </Link>
+          </div>
+          <Comments />
+          <ButtonPreview />
+        </footer>
       </main>
     </>
   );
