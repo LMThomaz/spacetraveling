@@ -16,6 +16,8 @@ import styles from './post.module.scss';
 
 interface Post {
   first_publication_date: string | null;
+  last_publication_date: string | null;
+  uid: string;
   data: {
     title: string;
     banner: {
@@ -33,10 +35,17 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  nextPost: Post | null;
+  prevPost: Post | null;
   preview: boolean;
 }
 
-export default function Post({ post, preview }: PostProps): JSX.Element {
+export default function Post({
+  post,
+  preview,
+  nextPost,
+  prevPost,
+}: PostProps): JSX.Element {
   const router = useRouter();
 
   const timeForReading = post.data.content.reduce((wordInPost, content) => {
@@ -87,7 +96,19 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
                 {`${Math.ceil(timeForReading / 200)} min`}
               </span>
             </p>
-            <small>* editado em 19 mar 2021, às 15:49</small>
+            {post?.last_publication_date &&
+              post.last_publication_date !== post.first_publication_date && (
+                <small>
+                  * editado em{' '}
+                  {format(new Date(post.last_publication_date), 'dd MMM yyyy', {
+                    locale: ptBR,
+                  })}
+                  , às{' '}
+                  {format(new Date(post.last_publication_date), 'HH:mm', {
+                    locale: ptBR,
+                  })}
+                </small>
+              )}
           </header>
           {post.data.content.map(content => (
             <article key={content.heading}>
@@ -103,18 +124,23 @@ export default function Post({ post, preview }: PostProps): JSX.Element {
 
         <footer className={styles.footer}>
           <div className={styles.links}>
-            <Link href="/posts/slug-pagina">
-              <a>
-                <p>Como utilizar Hooks</p>
-                <span>Post anterior</span>
-              </a>
-            </Link>
-            <Link href="/posts/slug-pagina">
-              <a>
-                <p>Criando um app CRA do Zero</p>
-                <span>Próximo post</span>
-              </a>
-            </Link>
+            {prevPost && (
+              <Link href={`/post/${prevPost.uid}`}>
+                <a className={styles.prevPost}>
+                  <p>{prevPost.data.title}</p>
+                  <span>Post anterior</span>
+                </a>
+              </Link>
+            )}
+
+            {nextPost && (
+              <Link href={`/post/${nextPost.uid}`}>
+                <a className={styles.nextPost}>
+                  <p>{nextPost.data.title}</p>
+                  <span>Próximo post</span>
+                </a>
+              </Link>
+            )}
           </div>
           <Comments />
           <ButtonPreview exit={preview} />
@@ -152,25 +178,32 @@ export const getStaticProps: GetStaticProps = async ({
     ref: previewData?.ref ?? null,
   });
 
-  const post = {
-    data: {
-      author: response.data.author,
-      subtitle: response.data.subtitle,
-      title: response.data.title,
-      banner: {
-        url: response.data.banner.url,
-      },
-      content: response.data.content,
-    },
-    first_publication_date: response.first_publication_date,
-    uid: response.uid,
-  };
+  const nextPost = await prismic.query(
+    [Prismic.predicates.at('document.type', 'posts')],
+    {
+      pageSize: 1,
+      orderings: '[document.first_publication_date]',
+      after: response.id,
+      before,
+    }
+  );
+
+  const prevPost = await prismic.query(
+    [Prismic.predicates.at('document.type', 'posts')],
+    {
+      pageSize: 1,
+      orderings: '[document.first_publication_date desc]',
+      after: response.id,
+    }
+  );
 
   return {
     props: {
-      post,
       preview,
-      revalidate: 60 * 60 * 24, // 24 hours
+      post: response,
+      nextPost: nextPost.results[0] ?? null,
+      prevPost: prevPost.results[0] ?? null,
     },
+    revalidate: 60 * 60 * 8, // 8 hours
   };
 };
