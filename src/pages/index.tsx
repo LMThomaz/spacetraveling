@@ -126,12 +126,11 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const prismic = getPrismicClient();
 
-  console.log(previewData);
-
   const postsResponse = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
     {
       fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
+      orderings: '[document.first_publication_date desc]',
       page: 1,
       ref: previewData?.ref ?? null,
     }

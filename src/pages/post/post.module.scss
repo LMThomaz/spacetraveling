@@ -111,7 +111,8 @@
         color: var(--pink-500);
       }
 
-      & + a {
+      &.nextPost {
+        margin-left: auto;
         display: flex;
         flex-direction: column;
         align-items: flex-end;

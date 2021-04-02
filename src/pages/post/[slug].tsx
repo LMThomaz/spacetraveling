@@ -184,7 +184,6 @@ export const getStaticProps: GetStaticProps = async ({
       pageSize: 1,
       orderings: '[document.first_publication_date]',
       after: response.id,
-      before,
     }
   );
 
