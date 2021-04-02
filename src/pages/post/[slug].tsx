@@ -33,9 +33,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   const router = useRouter();
 
   const timeForReading = post.data.content.reduce((wordInPost, content) => {
@@ -116,7 +117,7 @@ export default function Post({ post }: PostProps): JSX.Element {
             </Link>
           </div>
           <Comments />
-          <ButtonPreview />
+          <ButtonPreview exit={preview} />
         </footer>
       </main>
     </>
@@ -139,13 +140,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async context => {
-  const { slug } = context.params;
+export const getStaticProps: GetStaticProps = async ({
+  preview = false,
+  previewData,
+  params,
+}) => {
+  const { slug } = params;
 
   const prismic = getPrismicClient();
-  const response = await prismic.getByUID('posts', String(slug), {});
-
-  console.log(response);
+  const response = await prismic.getByUID('posts', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
 
   const post = {
     data: {
@@ -164,6 +169,7 @@ export const getStaticProps: GetStaticProps = async context => {
   return {
     props: {
       post,
+      preview,
       revalidate: 60 * 60 * 24, // 24 hours
     },
   };

@@ -1,9 +1,18 @@
+import Link from 'next/link';
 import styles from './styles.module.scss';
 
-export default function ButtonPreview(): JSX.Element {
+interface ButtonPreviewProps {
+  exit: boolean;
+}
+
+export default function ButtonPreview({
+  exit = false,
+}: ButtonPreviewProps): JSX.Element {
   return (
-    <button type="button" className={styles.container}>
-      Sair do modo Preview
-    </button>
+    exit && (
+      <Link href="/api/exit-preview">
+        <a className={styles.container}>Sair do modo Preview</a>
+      </Link>
+    )
   );
 }
